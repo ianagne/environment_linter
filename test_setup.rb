@@ -125,9 +125,15 @@ def test_rvm_setup
 end
 
 def test_gpg_installed
+  return true if ssystem("which gpg")
+
+  error "gpg not found.  Run 'brew install brew gnupg gnupg2' "
 end
 
 def test_rvm_command
+  return true if ssystem("which rvm")
+
+  error "rvm not found. Run '\curl -sSL https://get.rvm.io | bash -s stable --ruby' and restart your terminal"
 end
 
 def test_rvm_dir_in_path
