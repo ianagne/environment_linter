@@ -136,11 +136,6 @@ def test_rvm_command
   error "rvm not found. Run '\curl -sSL https://get.rvm.io | bash -s stable --ruby' and restart your terminal"
 end
 
-def test_rvm_dir_in_path
-  return true
-end
-
-
 def test_rvm_managing_ruby
   return true unless %x(rvm current).chomp == "system"
 
