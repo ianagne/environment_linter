@@ -292,8 +292,14 @@ def test_ruby_version
 end
 
 def test_rubygems_location
-  ruby_location = File.dirname(%x(which ruby))
-  gem_location = File.dirname(%x(which gem))
+  if :rvm
+    ruby_location = File.expand_path("../../..",File.dirname(%x(which ruby)))
+    gem_location = File.expand_path("../../..",File.dirname(%x(which bundle)))
+  else
+    ruby_location = File.dirname(%x(which ruby))
+    gem_location = File.dirname(%x(which bundle))
+  end
+
 
   return true if ruby_location == gem_location
 
