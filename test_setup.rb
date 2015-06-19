@@ -137,9 +137,14 @@ def test_rvm_command
 end
 
 def test_rvm_dir_in_path
+  return true
 end
 
+
 def test_rvm_managing_ruby
+  return true unless %x(rvm version-name).chomp == "system"
+
+  error "rvm is not managing your ruby. Ensure ruby is installed by rvm and set global ruby."
 end
 
 def test_rbenv_setup
@@ -274,16 +279,16 @@ def test_ruby_isnt_system
 
   return true unless ruby_is_system
 
-  error "ruby is not managed by a ruby version manager. Install rbenv, then run `rbenv install 2.2.0`."
+  error "ruby is not managed by a ruby version manager. Install rvm, then run `rvm install 2.2.0`."
 end
 
-RUBY_VERSIONS = %w(2.0.0 2.1.0 2.1.1 2.1.2 2.1.3 2.1.4 2.1.5 2.2.0)
+RUBY_VERSIONS = %w(2.0.0 2.1.0 2.1.1 2.1.2 2.1.3 2.1.4 2.1.5 2.2.0 2.2.1)
 def test_ruby_version
   ruby_version = %x(ruby -v | cut -d ' ' -f 2).chomp.split("p").first
 
   return true if RUBY_VERSIONS.include?(ruby_version)
 
-  error "ruby is out of date (current running #{ruby_version}). Install rbenv, then run `rbenv install 2.2.0`."
+  error "ruby is out of date (current running #{ruby_version}). Install rvm, then run `rvm install 2.2.0`."
 end
 
 def test_rubygems_location
@@ -317,8 +322,8 @@ def test_gem_bundler_installed
 end
 
 def test_gem_bundle_command_location
-  ruby_location = File.dirname(%x(which ruby))
-  bundle_location = File.dirname(%x(which bundle))
+  ruby_location = File.expand_path("../../..",File.dirname(%x(which ruby)))
+  bundle_location = File.expand_path("../../..",File.dirname(%x(which bundle)))
 
   return true if ruby_location == bundle_location
 
