@@ -142,7 +142,7 @@ end
 
 
 def test_rvm_managing_ruby
-  return true unless %x(rvm version-name).chomp == "system"
+  return true unless %x(rvm current).chomp == "system"
 
   error "rvm is not managing your ruby. Ensure ruby is installed by rvm and set global ruby."
 end
@@ -299,7 +299,6 @@ def test_rubygems_location
     ruby_location = File.dirname(%x(which ruby))
     gem_location = File.dirname(%x(which bundle))
   end
-
 
   return true if ruby_location == gem_location
 
