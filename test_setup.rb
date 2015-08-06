@@ -119,7 +119,6 @@ def test_rvm_setup
   test "RVM" do
     test_gpg_installed &&
     test_rvm_command &&
-    test_rvm_dir_in_path &&
     test_rvm_managing_ruby
   end
 end
